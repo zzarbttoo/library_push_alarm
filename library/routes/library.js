@@ -12,9 +12,6 @@ const url = library_config.url
 
 router.get("/date", function(req, res, next){
 
-    console.log(library_config);
-    console.log(url);
-
     request(url, function(error, response, body){
         if(!error && response.statusCode == 200 ){
             let library_list = JSON.parse(body).SeoulPublicLibraryInfo;
