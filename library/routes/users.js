@@ -7,6 +7,8 @@ var user_db = require('../database/user_db');
 /* GET users listing. */
 router.get('/select', function(req, res, next) {
 
+  
+  console.log(user_db);
   console.log(user_db.select);
 
   res.send('respond with a resource');
