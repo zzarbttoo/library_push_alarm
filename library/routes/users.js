@@ -17,7 +17,16 @@ router.get('/select', function(req, res, next) {
 
 router.post('/insert', function(req, res, next){
 
+  let jsondata = req.body;
+  let values = []
+
+  values.push([jsondata.user_name, jsondata.user_email, jsondata.user_phone]);
+
+  console.log(user_db.insert(values));
   res.send('insert success');
+
+  
+
 
 });
 
