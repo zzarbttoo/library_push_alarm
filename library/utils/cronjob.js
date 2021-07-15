@@ -1,5 +1,10 @@
 var cron = require('node-cron');
+var logger = require('./logger');
 
-cron.schedule('*/1 * * * *', function(){
-    console.log('cron test');
+exports.testcron = cron.schedule('*/1 * * * *', function(){
+
+    logger.error('helloworl');
+
+
+
 }).start();

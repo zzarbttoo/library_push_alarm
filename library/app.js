@@ -8,9 +8,14 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var swaggerUi = require('swagger-ui-express');
 var swaggerDocument = require('./utils/swagger');
-
 var cronjob = require('./utils/cronjob.js');
-console.log(cronjob);
+
+var logger = require('./utils/logger');
+
+logger.info('logger test');
+
+// cronjob을 여기부터 밑으로 적기
+cronjob.testcron; 
 
 var app = express();
 
