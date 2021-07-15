@@ -1,4 +1,5 @@
 const swaggerJsdoc = require('swagger-jsdoc');
+var logger = require('./logger');
 
 const options =  {
 
@@ -14,5 +15,6 @@ const options =  {
 }
 
 console.log('swagger define');
+//logger.info('swagger define');
 
 module.exports = swaggerJsdoc(options);

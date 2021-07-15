@@ -38,14 +38,6 @@ router.put('/update', function(req, res, next){
   user_db.update(update_value);
 
 
-
-
-
-  
-
-
-
-
 });
 
 router.delete('/delete/:usernum', function(req, res, next){
@@ -69,7 +61,6 @@ router.get('/selectone/:usernum', function(req, res, next){
   let usernum = req.params.usernum;
 
   console.log(user_db.select_one(usernum));
-
 
 });
 
