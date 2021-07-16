@@ -3,8 +3,6 @@ var logger = require('./logger');
 
 exports.testcron = cron.schedule('*/1 * * * *', function(){
 
-    logger.error('helloworl');
-
-
+    //logger.error('helloworl');
 
 }).start();
