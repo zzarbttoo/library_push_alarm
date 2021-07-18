@@ -1,4 +1,4 @@
-var express = require('express');
+import express from 'express';
 var router = express.Router();
 var request = require('request');
 var secret_config = require('../secret.json');
