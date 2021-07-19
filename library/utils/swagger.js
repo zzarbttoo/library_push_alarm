@@ -1,20 +1,24 @@
+const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
-var logger = require('./logger');
 
-const options =  {
+const options = {
 
-  definition : {
-  openapi: "3.0.3", // present supported openapi version
-  info: {
-    title: "Library API", // short title.
-    description: "Library API", //  desc.
-    version: "1.0.0", // version number
-  }
-},
-  apis : ['../routes/*.js']
-}
+    swaggerDefinition : {
+        info : {
+            title : 'Library Api',
+            version : '1.0.0',
+            description : 'Api with express'
+        },
+        host : 'localhost:3000',
+        basePath : '/'
+    },
+    apis : ['./routes/*.js', './swagger/*']
+};
 
-console.log('swagger define');
-//logger.info('swagger define');
+const specs = swaggerJsdoc(options);
 
-module.exports = swaggerJsdoc(options);
+module.exports = {
+    swaggerUi,
+    specs
+};
+

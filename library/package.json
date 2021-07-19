@@ -3,25 +3,20 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
-    "test": "jest"
+    "start": "node ./bin/www"
   },
   "dependencies": {
-    "cookie-parser": "^1.4.5",
+    "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
-    "mysql": "^2.18.1",
-    "node-cron": "^3.0.0",
-    "pug": "^3.0.2",
+    "mysql2": "^2.2.5",
+    "nodemon": "^2.0.12",
+    "sequelize": "^6.6.5",
+    "sequelize-auto": "^0.8.3",
     "swagger-jsdoc": "^6.1.0",
-    "swagger-ui-express": "^4.1.6",
-    "winston": "^3.3.3",
-    "winston-daily-rotate-file": "^4.5.5"
-  },
-  "devDependencies": {
-    "jest": "^27.0.6"
+    "swagger-ui-express": "^4.1.6"
   }
 }
