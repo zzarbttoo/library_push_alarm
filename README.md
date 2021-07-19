@@ -15,3 +15,6 @@ documentation : swagger
 - scheduler을 이용한 지속적 알림 
 - 도서관/코로나 공공 api를 이용한 알람 
 
+
+
+- ~ 7월 30일 -> 회원가입/로그인 구현
