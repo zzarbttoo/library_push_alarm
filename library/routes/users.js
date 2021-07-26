@@ -4,14 +4,42 @@ var userRouter = express.Router();
 const users = require('../services/auth');
 
 
+userRouter.get('/sign_up',(req) =>{
 
-userRouter.post('/sign_up', (req, res, next)=>{
+    console.log("sign_up");
+
+});
+
+userRouter.post('/sign_up', async (req, res, next)=>{
+
+    const userInform = req.body;
+
+    console.log(userInform);
+    const auth = new AuthService(userInform);
 
 
-    const auth = new AuthService();
+    const now_time = Math.round((new Date().valueOf()* Math.random())) + "";
 
-    console.log(auth.sign_up().then(console.log(val)));
+    try{
+    const result = await auth.sign_up(now_time);
+    return res.status(201).json("hello world");
 
+    }catch(e){
+        console.log("catch error");
+        return next(e);
+
+    }
+
+
+});
+
+
+userRouter.post('/sign_in', (req, res, next) => {
+
+
+    console.log("hello sign in");
+    console.log(req.body);
+    
 
 });
 
