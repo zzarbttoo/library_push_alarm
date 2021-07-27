@@ -9,17 +9,37 @@ class AuthService{
     
     async sign_in(){
 
-        return "helloworld";
+        const userRecord = await models.user.findOne({
+            where : {
+            USER_EMAIL : this.userInform.user_email
+            }
+        });
+
+        if (userRecord == null) throw "계정 없음";
+
+        const given_password = this.userInform.user_password;
+        if (await argon2.verify(userRecord.dataValues.USER_PASSWORD, given_password)){
+
+            const user = userRecord.dataValues;
+
+            Reflect.deleteProperty(user, "SALT");
+            Reflect.deleteProperty(user, "USER_PASSWORD");
+
+            console.log("user ::: " + user.USER_EMAIL);
+            console.log("user ::: " + user.USER_PASSWORD);
+
+            return user;
+
+        }else{
+            throw new Error("비밀번호 불일치");
+        }
     }
 
     async sign_up(salt){
 
-        console.log("time1 ::: " + new Date());
 
         const given_password = this.userInform.user_password;
         const hashedPassowrd = await argon2.hash(given_password, salt);
-
-        console.log("time2 ::: " + new Date());
 
         const userRecord = await models.user.create({
 
@@ -31,14 +51,14 @@ class AuthService{
 
         }).then(() => {
 
+            console.log(userRecord);
             return "Sign up Success";
 
         }).catch((err) => {
 
-            console.log("내부에서는 Error 잡음");
+            console.log("회원 가입 에러");
             throw "Error";
         })
-
     }
 
     async sign_out(){

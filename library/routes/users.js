@@ -5,68 +5,54 @@ const users = require('../services/auth');
 const {celebrate, Joi, errors, Seg} = require('celebrate');
 
 
-userRouter.get('/sign_up',(req) =>{
+userRouter.get("/sign_up", () =>{
 
-    console.log("sign_up");
-
+    //화면 이동
 });
-
 
 //TODO : celebrate를 이용해 받은 값에 대한 유효성 검사(이메일, 전화번호 특히)
 userRouter.post('/sign_up', async (req, res, next)=>{
 
     const userInform = req.body;
-
-    console.log(userInform);
     const auth = new AuthService(userInform);
 
     const now_time = Math.round((new Date().valueOf()* Math.random())) + "";
-
  
-
-
     await auth.sign_up(now_time).then(() => {
 
-        console.log("외부에서 성공으로 인식");
+        console.log("Sign up success");
+        res.redirect("/users/sign_in");
+
 
     }).catch((err) => {
-        console.log("no way");
-
+        console.log(err);
     });
 
+});
 
-    // const result = await auth.sign_up(now_time).catch(
-    //     () => {
-    //         console.log("hello error");
-    //     }
-    // ).then(
-    //     () => {
+userRouter.get('/sign_in',(req, res, next) =>{
 
-    //         console.log("hello world");
-    //     }
-
-    // );
-    
-
-    // try{
-
-    // const result = await auth.sign_up(now_time);
-
-    // }catch(e){
-    //     console.log("catch error");
-    //     return next(e);
-    // }
-
+    //화면 이동
+    console.log("sign_in");
 
 });
 
 
-userRouter.post('/sign_in', (req, res, next) => {
+userRouter.post('/sign_in', async (req, res, next) => {
+
+    const userInform = req.body;
+    const auth = new AuthService(userInform);
 
 
-    console.log("hello sign in");
-    console.log(req.body);
-    
+    await auth.sign_in().then((result) => {
+
+        console.log(result);
+
+    }).catch((err) => {
+
+        console.log("비밀번호 불일치");
+
+    });
 
 });
 
