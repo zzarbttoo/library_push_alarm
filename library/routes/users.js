@@ -61,19 +61,27 @@ userRouter.post('/sign_in', async (req, res, next) => {
 });
 
 
-userRouter.get('/sign_out', async() =>{
+userRouter.get('/sign_out', async(req, res, next) =>{
 
-
-
-
-});
-
-userRouter.get("/cookie_test" , (req, res, next) =>{
-    console.log(req.cookies);
     console.log(req.signedCookies);
 
-    res.send("cookie_test");
+    if (req.cookies != null){
+        console.log("로그아웃 됐습니다");
+        res.clearCookie('user')
+        res.redirect('/users/sign_in');
+
+    }else{
+        console.log("로그인 상태가 아닙니다");
+    }
+
 });
+
+// userRouter.get("/cookie_test" , (req, res, next) =>{
+//     console.log(req.cookies);
+//     console.log(req.signedCookies);
+
+//     res.send("cookie_test");
+// });
 
 
 
