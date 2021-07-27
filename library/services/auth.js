@@ -25,8 +25,8 @@ class AuthService{
             Reflect.deleteProperty(user, "SALT");
             Reflect.deleteProperty(user, "USER_PASSWORD");
 
-            console.log("user ::: " + user.USER_EMAIL);
-            console.log("user ::: " + user.USER_PASSWORD);
+            //console.log("user ::: " + user.USER_EMAIL);
+            //console.log("user ::: " + user.USER_PASSWORD);
 
             return user;
 

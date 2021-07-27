@@ -3,6 +3,7 @@ const AuthService = require('../services/auth');
 var userRouter = express.Router();
 const users = require('../services/auth');
 const {celebrate, Joi, errors, Seg} = require('celebrate');
+const cookieParser = require('cookie-parser');
 
 
 userRouter.get("/sign_up", () =>{
@@ -32,7 +33,6 @@ userRouter.post('/sign_up', async (req, res, next)=>{
 
 userRouter.get('/sign_in',(req, res, next) =>{
 
-    //화면 이동
     console.log("sign_in");
 
 });
@@ -42,18 +42,39 @@ userRouter.post('/sign_in', async (req, res, next) => {
 
     const userInform = req.body;
     const auth = new AuthService(userInform);
-
+    
 
     await auth.sign_in().then((result) => {
 
-        console.log(result);
+        console.log("result type ::: " + typeof(result));
+        res.cookie("user", JSON.stringify(result), {signed:true});
+
+        res.redirect("/users/cookie_test");
+
 
     }).catch((err) => {
 
-        console.log("비밀번호 불일치");
+        console.log("login error");
 
     });
 
 });
+
+
+userRouter.get('/sign_out', async() =>{
+
+
+
+
+});
+
+userRouter.get("/cookie_test" , (req, res, next) =>{
+    console.log(req.cookies);
+    console.log(req.signedCookies);
+
+    res.send("cookie_test");
+});
+
+
 
 module.exports = userRouter;
