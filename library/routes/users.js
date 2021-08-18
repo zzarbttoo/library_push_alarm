@@ -22,7 +22,7 @@ userRouter.post('/sign_up', async (req, res, next)=>{
     await auth.sign_up(now_time).then(() => {
 
         console.log("Sign up success");
-        res.redirect("/users/sign_in");
+        //res.redirect("/users/sign_in");
 
 
     }).catch((err) => {
@@ -42,14 +42,12 @@ userRouter.post('/sign_in', async (req, res, next) => {
 
     const userInform = req.body;
     const auth = new AuthService(userInform);
-    
 
     await auth.sign_in().then((result) => {
 
         console.log("result type ::: " + typeof(result));
         res.cookie("user", JSON.stringify(result), {signed:true});
-
-        res.redirect("/users/cookie_test");
+        //res.redirect("/users/cookie_test");
 
 
     }).catch((err) => {
@@ -68,7 +66,7 @@ userRouter.get('/sign_out', async(req, res, next) =>{
     if (req.cookies != null){
         console.log("로그아웃 됐습니다");
         res.clearCookie('user')
-        res.redirect('/users/sign_in');
+        //res.redirect('/users/sign_in');
 
     }else{
         console.log("로그인 상태가 아닙니다");

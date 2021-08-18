@@ -1,11 +1,11 @@
 var createError = require('http-errors');
 var express = require('express');
+var cors = require('cors');
 var app = express();
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
-
 
 const {swaggerUi, specs} = require('./utils/swagger');
 
@@ -13,6 +13,12 @@ const models = require('./models/index.js');
 
 var indexRouter = require('./routes/index');
 var userRouter = require('./routes/users');
+
+const corsOptions = {
+  origin : 'http://localhost:3001',
+  credential : true
+}
+
 
 //sequelize sync method 
 
@@ -29,14 +35,15 @@ models.sequelize.sync().then(() => {
 //app.set('views', path.join(__dirname, 'views'));
 //app.set('view engine', 'jade');
 
+app.use(cors(corsOptions));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser("secret-key"));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', userRouter);
+app.use('/api/', indexRouter);
+app.use('/api/users', userRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
