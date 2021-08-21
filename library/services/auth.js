@@ -15,7 +15,7 @@ class AuthService{
             }
         });
 
-        if (userRecord == null) throw "계정 없음";
+        if (userRecord == null) throw new Error("계정이 등록되어있지 않음");
 
         const given_password = this.userInform.user_password;
         if (await argon2.verify(userRecord.dataValues.USER_PASSWORD, given_password)){

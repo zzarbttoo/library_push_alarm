@@ -2,9 +2,8 @@ var express = require('express');
 const AuthService = require('../services/auth');
 var userRouter = express.Router();
 const users = require('../services/auth');
-const {celebrate, Joi, errors, Seg} = require('celebrate');
 const cookieParser = require('cookie-parser');
-
+const {celebrate, Joi, errors, Seg, Segments} = require('celebrate');
 
 userRouter.get("/sign_up", () =>{
 
@@ -26,7 +25,7 @@ userRouter.post('/sign_up', async (req, res, next)=>{
 
 
     }).catch((err) => {
-        console.log(err);
+        console.log('err ::: ' + err);
     });
 
 });
@@ -38,7 +37,13 @@ userRouter.get('/sign_in',(req, res, next) =>{
 });
 
 
-userRouter.post('/sign_in', async (req, res, next) => {
+
+userRouter.post('/sign_in', celebrate({
+[Segments.BODY] : Joi.object().keys({
+    user_email : Joi.string().required(),
+    user_password : Joi.string().required()
+})
+}),async (req, res, next) => {
 
     const userInform = req.body;
     const auth = new AuthService(userInform);
@@ -47,13 +52,15 @@ userRouter.post('/sign_in', async (req, res, next) => {
 
         console.log("result type ::: " + typeof(result));
         res.cookie("user", JSON.stringify(result), {signed:true});
+        console.log('result ::: ' + result);
+        res.status(200).send('로그인 성공');
         //res.redirect("/users/cookie_test");
 
 
     }).catch((err) => {
 
-        console.log("login error");
-
+        console.log('err ::: ' + err.message);
+        res.status(500).send(err.message);
     });
 
 });
