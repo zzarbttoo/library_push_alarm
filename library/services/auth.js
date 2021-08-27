@@ -15,7 +15,7 @@ class AuthService{
             }
         });
 
-        if (userRecord == null) throw new Error("계정이 등록되어있지 않음");
+        if (userRecord == null) throw new Error("등록된 계정이 아닙니다");
 
         const given_password = this.userInform.user_password;
         if (await argon2.verify(userRecord.dataValues.USER_PASSWORD, given_password)){
@@ -31,7 +31,7 @@ class AuthService{
             return user;
 
         }else{
-            throw new Error("비밀번호 불일치");
+            throw new Error("비밀번호가 일치하지 않습니다");
         }
     }
 

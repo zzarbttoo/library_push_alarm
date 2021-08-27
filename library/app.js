@@ -13,15 +13,17 @@ const models = require('./models/index.js');
 
 var indexRouter = require('./routes/index');
 var userRouter = require('./routes/users');
+var libraryRouter = require('./routes/library');
+var diaryRouter = require('./routes/diary');
+var bookRouter = require('./routes/book');
 
+//TODO : cors 따로 빼기
 const corsOptions = {
   origin : 'http://localhost:3001',
   credential : true
 }
 
-
 //sequelize sync method 
-
 models.sequelize.sync().then(() => {
   console.log("DB Connect Success");
 
@@ -39,11 +41,13 @@ app.use(cors(corsOptions));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser("secret-key"));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api', indexRouter);
 app.use('/api/users', userRouter);
+app.use('/api/library', libraryRouter);
+app.use('/api/diary', diaryRouter);
+app.use('/api/book', bookRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

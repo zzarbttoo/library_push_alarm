@@ -1,8 +1,7 @@
-var express = require('express');
+const express = require('express');
 const AuthService = require('../services/auth');
-var userRouter = express.Router();
+const userRouter = express.Router();
 const users = require('../services/auth');
-const cookieParser = require('cookie-parser');
 const {celebrate, Joi, errors, Seg, Segments} = require('celebrate');
 
 userRouter.get("/sign_up", () =>{
@@ -30,15 +29,14 @@ userRouter.post('/sign_up', async (req, res, next)=>{
 
 });
 
-userRouter.get('/sign_in',(req, res, next) =>{
+userRouter.get('/sign-in',(req, res, next) =>{
 
     console.log("sign_in");
 
 });
 
 
-
-userRouter.post('/sign_in', celebrate({
+userRouter.post('/sign-in', celebrate({
 [Segments.BODY] : Joi.object().keys({
     user_email : Joi.string().required(),
     user_password : Joi.string().required()
@@ -54,7 +52,6 @@ userRouter.post('/sign_in', celebrate({
         res.cookie("user", JSON.stringify(result), {signed:true});
         console.log('result ::: ' + result);
         res.status(200).send('로그인 성공');
-        //res.redirect("/users/cookie_test");
 
 
     }).catch((err) => {
@@ -66,7 +63,7 @@ userRouter.post('/sign_in', celebrate({
 });
 
 
-userRouter.get('/sign_out', async(req, res, next) =>{
+userRouter.get('/sign-out', async(req, res, next) =>{
 
     console.log(req.signedCookies);
 

@@ -19,6 +19,7 @@
     "mysql2": "^2.2.5",
     "nodemon": "^2.0.12",
     "pug": "^3.0.2",
+    "selenium-webdriver": "^4.0.0-beta.4",
     "sequelize": "^6.6.5",
     "sequelize-auto": "^0.8.3",
     "sequelize-cli": "^6.2.0",
