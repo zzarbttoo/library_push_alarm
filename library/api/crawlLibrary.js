@@ -6,42 +6,61 @@ const path = require('../config/config.json').development.webDriverPath;
 //책 이릅을 입력받으면 책을 보유한 도서관 리스트를 호출 
 const crawlLibrary = async(bookName) =>{
 
-    const service = new chrome.ServiceBuilder("C:\\Users\\qodbw\\Documents\\library_push_alarm\\library\\api\\chromedriver.exe").build();
+ 
+    //TODO : path 따로 빼놓기
+    const chromeDriverPath = "C:\\Users\\qodbw\\Documents\\library_push_alarm\\library\\api\\chromedriver.exe";
+
+
+    const service = new chrome.ServiceBuilder(chromeDriverPath).build();
     chrome.setDefaultService(service);
+
+    const options = new chrome.Options().headless();
 
     let driver = await new webdriver
     .Builder()
     .forBrowser('chrome')
+    .setChromeOptions(options)
     .build();
 
+
     const url = await urlBuilder(bookName);
-    //const url = "https://www.naver.com/";
 
     await driver.get(url).catch(error => {
-        console.log(error)
-        throw new Error('selenium error');
+
+        driver.quit();
+        throw new Error('셀레니움 세팅 에러');
     });
 
-    await driver.findElement(By.id('searchResultDiv_dan')).findElement(By.className('first_lib')).click();
-    //const list =await driver.wait(until.elementLocated(By.className('table_bd')), 3000).getText();
-    await driver.wait(until.elementsLocated(By.className('table_bd')), 3000).then((values) => {
+
+    await driver.findElement(By.id('searchResultDiv_dan')).findElement(By.className('first_lib')).click().catch((error) => {
         
-        //values => 전체 도서관 list
-        values.forEach(async (element) => {
-            element.findElement(By.className('txt_link')).getText().then((library_name) => {
-                console.log(library_name) // 도서관 이름
-            });
-
-            
-        });
-
-
-
+        driver.quit();
+        throw new Error('등록되지 않은 도서');
 
     });
 
-    //driver.quit()
 
+    let libraryList = [];
+
+    await driver.wait(until.elementsLocated(By.className('table_bd')), 3000).then( async (values) => {
+        
+        libraryList = await Promise.all(values.map((element) => {
+            return element.findElement(By.className('txt_link')).getText();
+
+        }))
+
+    }).catch(() => {
+
+        //console.log('도서관 목록을 불러오던 중 에러 발생');
+        driver.quit();
+        throw new Error('도서관 목록을 불러오던 중 에러 발생');
+
+    })
+
+
+    driver.quit();
+
+    return libraryList;
 
 
 

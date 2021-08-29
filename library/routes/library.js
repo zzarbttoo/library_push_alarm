@@ -18,7 +18,13 @@ const crawlLibrary = require('../api/crawlLibrary');
 libraryRouter.get('/library-list/:book', async(req, res, next) => {
 
     book = req.params.book;
-    crawlLibrary(book);
+
+    try{
+    const libraryList = await crawlLibrary(book);
+    console.log(libraryList);
+    }catch(error){
+        console.log(error);
+    }
 
     res.status(200).send();
 
